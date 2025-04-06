@@ -135,7 +135,7 @@ const HomePage = () => {
         sx={{
           minHeight: "100vh",
           display: "flex",
-          backgroundImage: "url('Fondo_HikariTech.jpg')",
+          backgroundImage: "url('fondo.jpg')",
           backgroundSize: "cover",
           backgroundPosition: "center",
           pt: 10,
