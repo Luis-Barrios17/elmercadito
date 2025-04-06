@@ -95,7 +95,7 @@ const NavBar = ({ imageSrc = '', tittle = '', showSearch = true, showIcons = tru
         <Toolbar className={classes.toolbar}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '350px' }}>
             <Image
-              src={imageSrc || '/hikariTechblanco.png'} // Asegúrate de usar rutas relativas desde la carpeta public
+              src={imageSrc || '/hikaritechblanco.png'} // Asegúrate de usar rutas relativas desde la carpeta public
               alt="Logo"
               width={150} // Define el ancho de la imagen
               height={120} // Define la altura de la imagen
