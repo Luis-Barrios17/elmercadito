@@ -135,7 +135,7 @@ const HomePage = () => {
         sx={{
           minHeight: "100vh",
           display: "flex",
-          backgroundImage: "url('fondo.jpg')",
+          backgroundImage: "url('/fondo.jpg')",
           backgroundSize: "cover",
           backgroundPosition: "center",
           pt: 10,
@@ -281,7 +281,7 @@ const HomePage = () => {
                   >
                     {product.imagenProducto.map((url, imgIndex) => (
                       <img
-                        key={imgIndex}
+                        key={imgndex}
                         src={url}
                         alt={product.nombreProducto}
                         style={{ width: "100%", height: "150px", objectFit: "cover" }}
