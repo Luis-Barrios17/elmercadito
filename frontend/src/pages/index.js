@@ -43,7 +43,10 @@ const HomePage = () => {
           return;
         }
 
-        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/productos`, {
+        const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/productos`;
+        console.log("URL de la API:", apiUrl); // Verifica la URL generada
+
+        const response = await axios.get(apiUrl, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -52,7 +55,13 @@ const HomePage = () => {
         console.log("Productos obtenidos:", response.data); // Verifica los productos en la consola
         setProducts(response.data); // Guarda los productos en el estado
       } catch (error) {
-        console.error("Error al obtener los productos:", error);
+        if (error.response) {
+          console.error(
+            `Error ${error.response.status}: ${error.response.data.message || "Error desconocido"}`
+          );
+        } else {
+          console.error("Error al obtener los productos:", error.message);
+        }
       }
     };
 
@@ -80,7 +89,7 @@ const HomePage = () => {
       console.error("El ID del producto no es válido.");
       return;
     }
-  
+
     if (user) {
       // Si el usuario está autenticado, redirigir al producto
       window.location.href = `/Producto?id=${productId}`;
