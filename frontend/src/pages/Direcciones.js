@@ -7,6 +7,7 @@ import Footer from "../components/footer/Footer"; // Importar Footer
 
 const Direcciones = () => {
   const [addresses, setAddresses] = useState([]);
+  
   const router = useRouter();
 
   const fetchAddresses = async () => {
