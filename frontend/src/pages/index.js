@@ -135,12 +135,14 @@ const HomePage = () => {
         sx={{
           minHeight: "100vh",
           display: "flex",
-          backgroundImage: "url('fondo.png')",
+          backgroundImage: "url('/fondo.png')",
           backgroundSize: "cover",
           backgroundPosition: "center",
           pt: 10,
         }}
       >
+          {console.log("Ruta de fondo:", "/fondo.png")}
+          </Box>
         {/* Menú lateral */}
         {drawerOpen && (
           <Drawer
@@ -193,163 +195,162 @@ const HomePage = () => {
                     }}
                   />
                 </ListItem>
+            {/* Lista de categorías */}
+            {categories.map((text, index) => (
+              <ListItem
+                button
+                key={index}
+                onClick={() => handleCategoryClick(text)}
+                sx={{
+                  marginBottom: "10px",
+                  borderRadius: "8px",
+                  backgroundColor: selectedCategory === text ? "rgba(255, 255, 255, 0.2)" : "inherit",
+                  "&:hover": {
+                    backgroundColor: "rgba(255, 255, 255, 0.2)",
+                  },
+                }}
+              >
+                <ListItemText
+                  primary={text}
+                  primaryTypographyProps={{
+                    fontSize: "1rem",
+                    fontWeight: "bold",
+                    textAlign: "center",
+                  }}
+                />
+              </ListItem>
+            ))}
+          </List>
+        </Box>
+      </Drawer>
+    )}
 
-                {/* Lista de categorías */}
-                {categories.map((text, index) => (
-                  <ListItem
-                    button
-                    key={index}
-                    onClick={() => handleCategoryClick(text)}
-                    sx={{
-                      marginBottom: "10px",
-                      borderRadius: "8px",
-                      backgroundColor: selectedCategory === text ? "rgba(255, 255, 255, 0.2)" : "inherit",
-                      "&:hover": {
-                        backgroundColor: "rgba(255, 255, 255, 0.2)",
-                      },
-                    }}
-                  >
-                    <ListItemText
-                      primary={text}
-                      primaryTypographyProps={{
-                        fontSize: "1rem",
-                        fontWeight: "bold",
-                        textAlign: "center",
-                      }}
-                    />
-                  </ListItem>
-                ))}
-              </List>
-            </Box>
-          </Drawer>
+    {/* Contenido principal */}
+    <Box
+      component="main"
+      sx={{
+        flexGrow: 1,
+        p: 3,
+        ml: drawerOpen ? 30 : 0,
+        transition: "margin-left 0.3s",
+      }}
+    >
+      <Container>
+        {/* Mensaje de bienvenida */}
+        {user ? (
+          <Typography
+            variant="h4"
+            sx={{
+              color: "Black",
+              fontWeight: "bold",
+              mb: 4,
+              fontSize: "5rem",
+              textAlign: "center",
+            }}
+          >
+            Bienvenid@, {user.name || "Usuario"}
+          </Typography>
+        ) : (
+          <Typography
+            variant="h4"
+            sx={{
+              color: "Black",
+              fontWeight: "bold",
+              mb: 4,
+              fontSize: "5rem",
+              textAlign: "center",
+            }}
+          >
+            Bienvenid@ a nuestra tienda
+          </Typography>
         )}
 
-        {/* Contenido principal */}
-        <Box
-          component="main"
-          sx={{
-            flexGrow: 1,
-            p: 3,
-            ml: drawerOpen ? 30 : 0,
-            transition: "margin-left 0.3s",
-          }}
-        >
-          <Container>
-            {/* Mensaje de bienvenida */}
-            {user ? (
-              <Typography
-                variant="h4"
+        {/* Mostrar productos */}
+        <Grid container spacing={2}>
+          {visibleProducts.map((product, index) => (
+            <Grid item xs={12} sm={6} md={4} key={index}>
+              <Box
                 sx={{
-                  color: "Black",
-                  fontWeight: "bold",
-                  mb: 4,
-                  fontSize: "5rem",
+                  border: "1px solid #ccc",
+                  borderRadius: "8px",
+                  overflow: "hidden",
                   textAlign: "center",
+                  backgroundColor: "#fff",
+                  cursor: "pointer",
                 }}
+                onClick={() => handleProductClick(product._id)}
               >
-                Bienvenid@, {user.name || "Usuario"}
-              </Typography>
-            ) : (
-              <Typography
-                variant="h4"
-                sx={{
-                  color: "Black",
-                  fontWeight: "bold",
-                  mb: 4,
-                  fontSize: "5rem",
-                  textAlign: "center",
-                }}
-              >
-                Bienvenid@ a nuestra tienda
-              </Typography>
-            )}
-
-            {/* Mostrar productos */}
-            <Grid container spacing={2}>
-              {visibleProducts.map((product, index) => (
-                <Grid item xs={12} sm={6} md={4} key={index}>
-                  <Box
-                    sx={{
-                      border: "1px solid #ccc",
-                      borderRadius: "8px",
-                      overflow: "hidden",
-                      textAlign: "center",
-                      backgroundColor: "#fff",
-                      cursor: "pointer",
-                    }}
-                    onClick={() => handleProductClick(product._id)}
-                  >
-                    {product.imagenProducto.map((url, imgIndex) => (
-                      <img
-                        key={imgndex}
-                        src={url}
-                        alt={product.nombreProducto}
-                        style={{ width: "100%", height: "150px", objectFit: "cover" }}
-                      />
-                    ))}
-                    <Box sx={{ p: 2 }}>
-                      <Typography variant="h6">{product.nombreProducto}</Typography>
-                      <Typography variant="body2" sx={{ color: "#555", mt: 1 }}>
-                        {product.descripcionProducto}
-                      </Typography>
-                      <Typography variant="body1" sx={{ mt: 1, fontWeight: "bold" }}>
-                        ${product.precioProducto}
-                      </Typography>
-                    </Box>
-                  </Box>
-                </Grid>
-              ))}
+                {product.imagenProducto.map((url, imgIndex) => (
+                  <img
+                    key={imgndex}
+                    src={url}
+                    alt={product.nombreProducto}
+                    style={{ width: "100%", height: "150px", objectFit: "cover" }}
+                  />
+                ))}
+                <Box sx={{ p: 2 }}>
+                  <Typography variant="h6">{product.nombreProducto}</Typography>
+                  <Typography variant="body2" sx={{ color: "#555", mt: 1 }}>
+                    {product.descripcionProducto}
+                  </Typography>
+                  <Typography variant="body1" sx={{ mt: 1, fontWeight: "bold" }}>
+                    ${product.precioProducto}
+                  </Typography>
+                </Box>
+              </Box>
             </Grid>
+          ))}
+        </Grid>
 
-            {/* Controles de paginación */}
-            <Box sx={{ display: "flex", justifyContent: "center", mt: 4 }}>
-              <IconButton
-                onClick={() => handlePageChange(currentPage - 1)}
-                disabled={currentPage === 1}
-              >
-                Anterior
-              </IconButton>
-              {[...Array(totalPages)].map((_, index) => (
-                <IconButton
-                  key={index}
-                  onClick={() => handlePageChange(index + 1)}
-                  sx={{
-                    fontWeight: currentPage === index + 1 ? "bold" : "normal",
-                  }}
-                >
-                  {index + 1}
-                </IconButton>
-              ))}
-              <IconButton
-                onClick={() => handlePageChange(currentPage + 1)}
-                disabled={currentPage === totalPages}
-              >
-                Siguiente
-              </IconButton>
-            </Box>
-          </Container>
+        {/* Controles de paginación */}
+        <Box sx={{ display: "flex", justifyContent: "center", mt: 4 }}>
+          <IconButton
+            onClick={() => handlePageChange(currentPage - 1)}
+            disabled={currentPage === 1}
+          >
+            Anterior
+          </IconButton>
+          {[...Array(totalPages)].map((_, index) => (
+            <IconButton
+              key={index}
+              onClick={() => handlePageChange(index + 1)}
+              sx={{
+                fontWeight: currentPage === index + 1 ? "bold" : "normal",
+              }}
+            >
+              {index + 1}
+            </IconButton>
+          ))}
+          <IconButton
+            onClick={() => handlePageChange(currentPage + 1)}
+            disabled={currentPage === totalPages}
+          >
+            Siguiente
+          </IconButton>
         </Box>
-      </Box>
-      <Footer />
+      </Container>
+    </Box>
+  </Box>
+  <Footer />
 
-      {/* Diálogo para usuarios no autenticados */}
-      <Dialog open={dialogOpen} onClose={handleCloseDialog}>
-        <DialogTitle>Acceso restringido</DialogTitle>
-        <DialogContent>
-          <Typography>
-            Por favor, regístrate o inicia sesión para ver los detalles del producto.
-          </Typography>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={() => window.location.href = "/login"} color="primary">
-            Iniciar sesión
-          </Button>
-          <Button onClick={handleCloseDialog} color="secondary">
-            Cerrar
-          </Button>
-        </DialogActions>
-      </Dialog>
-    </>
+  {/* Diálogo para usuarios no autenticados */}
+  <Dialog open={dialogOpen} onClose={handleCloseDialog}>
+    <DialogTitle>Acceso restringido</DialogTitle>
+    <DialogContent>
+      <Typography>
+        Por favor, regístrate o inicia sesión para ver los detalles del producto.
+      </Typography>
+    </DialogContent>
+    <DialogActions>
+      <Button onClick={() => window.location.href = "/login"} color="primary">
+        Iniciar sesión
+      </Button>
+      <Button onClick={handleCloseDialog} color="secondary">
+        Cerrar
+      </Button>
+    </DialogActions>
+  </Dialog>
+</>
   );
 };
 
