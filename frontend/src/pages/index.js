@@ -135,7 +135,7 @@ const HomePage = () => {
         sx={{
           minHeight: "100vh",
           display: "flex",
-          backgroundImage: "url('/fondo.png')",
+          backgroundImage: "url('fondo.png')",
           backgroundSize: "cover",
           backgroundPosition: "center",
           pt: 10,
